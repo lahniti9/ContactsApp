@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Contacts App</string>
+    <string name="app_logo">App Logo</string>
+    <string name="language">Language</string>
+    <string name="welcome_description">Contacts App</string>
+    <string name="start_button_text">Get Started</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="contact_phone">Phone Number</string>
+    <string name="action_button">Action</string>
+    <string name="search_hint">Search Contacts...</string>
+    <string name="english">English</string>
+    <string name="french">French</string>
+    <string name="arabic">Arabic</string>
+    <string name="choose_action">Choose Action</string>
+    <string name="call">Call</string>
+    <string name="message">Message</string>
+    <string name="contacts">Contacts</string>
+</resources>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ece6f4"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="170dp"
+    android:paddingHorizontal="23dp"
+    android:background="@drawable/backheader"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:orientation="horizontal"
+        tools:ignore="ExtraText">
+        <!-- العنوان -->
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:fontFamily="serif"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/languageButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end"
+            android:src="@drawable/baseline_language_24"
+            android:contentDescription="@string/language"
+            android:background="?attr/selectableItemBackground"
+            android:padding="8dp"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
+        <EditText
+
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:fontFamily="serif"
+            android:background="@drawable/searchbackgroound"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="@string/search_hint"
+            android:padding="8dp"
+            android:textColorHint="#C4C4C4" />
+
+
+</LinearLayout>
+
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/contact_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="8dp" />
+
+</LinearLayout>
+

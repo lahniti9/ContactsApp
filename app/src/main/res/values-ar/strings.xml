@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="app_name">تطبيق جهات الاتصال</string>
+    <string name="language">اللغة</string>
+    <string name="english">الإنجليزية</string>
+    <string name="french">الفرنسية</string>
+    <string name="arabic">العربية</string>
+    <string name="choose_action">اختر الإجراء</string>
+    <string name="call">مكالمة</string>
+    <string name="message">رسالة</string>
+    <string name="contacts" tools:ignore="ExtraTranslation">جهات الاتصال</string>
+    <string name="search_hint">ابحث في جهات الاتصال...</string>
+    <string name="contact_name">اسم جهة الاتصال</string>
+    <string name="contact_phone">رقم الهاتف</string>
+    <string name="action_button">إجراء</string>
+    <string name="app_logo">شعار التطبيق</string>
+    <string name="welcome_description">تطبيق جهات الاتصال</string>
+    <string name="start_button_text">ابدأ</string>
+</resources>
