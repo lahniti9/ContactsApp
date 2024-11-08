@@ -34,42 +34,42 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var contactList: RecyclerView
     private lateinit var contactAdapter: ContactAdapter
-    private val contactListData = mutableListOf<Contact>()  // List to store contacts
-    private val originalContactList = mutableListOf<Contact>()
+    private val contactListData = mutableListOf<Contact>()  // Liste pour stocker les contacts
+    private val originalContactList = mutableListOf<Contact>()  // Liste d'origine des contacts
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Initialize SharedPreferences
+        // Initialiser les SharedPreferences
         sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE)
 
-        // Get the selected language from SharedPreferences
+        // Récupérer la langue sélectionnée depuis les SharedPreferences
         val language = sharedPreferences.getString("language", "en") ?: "en"
         updateLocale(language)
 
         setContentView(R.layout.activity_main)
 
-        // Initialize RecyclerView
+        // Initialiser RecyclerView pour afficher les contacts
         contactList = findViewById(R.id.contact_list)
         contactAdapter = ContactAdapter(contactListData, this)
         contactList.layoutManager = LinearLayoutManager(this)
         contactList.adapter = contactAdapter
 
-        // Set up SearchView for filtering contacts
+        // Configurer la SearchView pour filtrer les contacts
         setupSearchView()
 
-        // Check permissions and load contacts if permission is granted
+        // Vérifier les permissions et charger les contacts si la permission est accordée
         checkPermissions()
 
-        // Language button setup
+        // Configuration du bouton pour changer la langue
         val languageButton: ImageView = findViewById(R.id.languageButton)
         languageButton.setOnClickListener {
             showLanguageMenu(it)
         }
     }
 
-    // Method to update the locale based on selected language
+    // Méthode pour mettre à jour la langue de l'application
     private fun updateLocale(language: String) {
         val locale = when (language) {
             "en" -> Locale("en", "US")
@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         val config = resources.configuration
         config.setLocale(locale)
 
-        // Update the layout direction based on language (for RTL support)
+        // Mettre à jour la direction de la mise en page en fonction de la langue (pour la prise en charge du RTL)
         if (locale.language == "ar") {
             config.setLayoutDirection(Locale("ar"))
         } else {
@@ -91,11 +91,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showLanguageMenu(view: View) {
-        // Create a PopupMenu
+        // Créer un PopupMenu pour changer de langue
         val popupMenu = PopupMenu(this, view)
         menuInflater.inflate(R.menu.menu_languages, popupMenu.menu)
 
-        // Set menu item click listener
+        // Définir un écouteur pour gérer la sélection de langue
         popupMenu.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.english -> onLanguageSelected("en")
@@ -105,23 +105,23 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Show the PopupMenu
+        // Afficher le PopupMenu
         popupMenu.show()
     }
 
     private fun onLanguageSelected(language: String) {
-        // Save the selected language in SharedPreferences
+        // Sauvegarder la langue sélectionnée dans SharedPreferences
         sharedPreferences.edit().putString("language", language).apply()
 
-        // Update the locale and reload the activity to apply the language change
+        // Mettre à jour la langue et recréer l'activité pour appliquer les modifications
         updateLocale(language)
-        recreate()  // Recreate the activity to apply language changes
+        recreate()  // Recréer l'activité pour appliquer le changement de langue
     }
 
     @SuppressLint("Range")
     private fun loadContacts() {
-        originalContactList.clear()  // Clear the original list before adding contacts
-        contactListData.clear()  // Clear the list used for displaying contacts
+        originalContactList.clear()  // Vider la liste d'origine avant d'ajouter les contacts
+        contactListData.clear()  // Vider la liste utilisée pour l'affichage des contacts
 
         val contactsUri = ContactsContract.Contacts.CONTENT_URI
         val projection = arrayOf(
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                             val phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             val contact = Contact(displayName, phoneNumber)
 
-                            // Add the contact to both lists
+                            // Ajouter le contact aux deux listes
                             originalContactList.add(contact)
                             contactListData.add(contact)
                         }
@@ -160,28 +160,28 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             it.close()
-            contactAdapter.notifyDataSetChanged()
+            contactAdapter.notifyDataSetChanged()  // Mettre à jour l'adaptateur pour afficher les contacts
         }
     }
 
-    // Setup the SearchView for filtering contacts
+    // Configurer la SearchView pour filtrer les contacts
     private fun setupSearchView() {
         val searchView: EditText = findViewById(R.id.searchView)
         searchView.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                // No need to do anything here
+                // Rien à faire ici
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // No need to do anything here
+                // Rien à faire ici
             }
 
             override fun onTextChanged(newText: CharSequence?, start: Int, before: Int, count: Int) {
                 if (newText.isNullOrEmpty()) {
-                    // If search field is empty, reset the contact list
+                    // Si le champ de recherche est vide, réinitialiser la liste des contacts
                     contactAdapter.updateData(originalContactList)
                 } else {
-                    // Filter the contacts list based on the search query
+                    // Filtrer les contacts en fonction de la requête de recherche
                     val filteredContacts = originalContactList.filter {
                         it.name.contains(newText.toString(), ignoreCase = true)
                     }
@@ -191,17 +191,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    // Function to check if permission is granted, otherwise request it
+    // Fonction pour vérifier si la permission est accordée, sinon la demander
     private fun checkPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
             != PackageManager.PERMISSION_GRANTED) {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         } else {
-            loadContacts()
+            loadContacts()  // Charger les contacts si la permission est accordée
         }
     }
 
-    // Launch permission request for reading contacts
+    // Lancer la demande de permission pour lire les contacts
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Handle permission request for making phone calls
+    // Gérer la demande de permission pour passer des appels téléphoniques
     fun checkCallPermission(contactPhone: String) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
             != PackageManager.PERMISSION_GRANTED) {
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Launch call permission request
+    // Lancer la demande de permission pour passer un appel téléphonique
     private val requestCallPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
@@ -233,14 +233,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Function to make a phone call
+    // Fonction pour passer un appel téléphonique
     fun makePhoneCall(phoneNumber: String) {
         val callIntent = Intent(Intent.ACTION_CALL)
         callIntent.data = Uri.parse("tel:$phoneNumber")
         startActivity(callIntent)
     }
 
-    // Function to send a message
+    // Fonction pour envoyer un message
     fun sendMessage(phoneNumber: String) {
         val smsIntent = Intent(Intent.ACTION_VIEW)
         smsIntent.data = Uri.parse("sms:$phoneNumber")
